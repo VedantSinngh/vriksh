@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar"; // Import Navbar
-import Footer from "../components/Footer"; // Import Footer
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import React, { ReactNode } from "react"; // Import React and ReactNode
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,14 +11,19 @@ export const metadata = {
   description: "Find your perfect home in Ahmedabad with personalized assistance and expert market insights",
 };
 
-export default function RootLayout({ children }) {
+type RootLayoutProps = {
+  children: ReactNode; // Explicitly typing children as ReactNode
+};
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar /> {/* Navbar Component */}
+        <Navbar />
         <main>{children}</main>
         <Footer />
       </body>
     </html>
   );
 }
+
