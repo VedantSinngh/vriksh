@@ -27,7 +27,9 @@ export default function Header() {
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <Link href="/" className="flex items-center group">
-                <div className="relative w-12 h-12 mr-3 overflow-hidden rounded-full bg-white shadow-sm p-1 transition duration-300 group-hover:shadow-md"> <Image src="/logo.png" alt="Mindsestate Logo" fill className="object-contain p-1" /> </div>
+                    <div className="relative w-12 h-12 mr-3 overflow-hidden rounded-full bg-white shadow-sm p-1 transition duration-300 group-hover:shadow-md">
+                        <Image src="/logo.png" alt="Mindsestate Logo" fill className="object-contain p-1" />
+                    </div>
                     <div className="flex flex-col ml-2">
                         <span className={`font-bold text-xl transition duration-300 ${scrolled ? "text-gray-800" : "text-white"} group-hover:text-blue-600`}>
                             Mindsestate
@@ -79,7 +81,7 @@ export default function Header() {
                     <div className="bg-white rounded-xl p-8 w-4/5 max-w-md transform transition-all duration-500">
                         <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Menu</h3>
                         <nav className="flex flex-col space-y-4">
-                            {["Home", "product-listing", "Agents", "Blog"].map((item, index) => (
+                            {["Home", "Properties", "Agents", "Blog"].map((item, index) => (
                                 <Link
                                     key={index}
                                     href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
