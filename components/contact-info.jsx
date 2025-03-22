@@ -1,11 +1,11 @@
 export function ContactInfo() {
     return (
-        <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto bg-gray-50">
+        <section className="py-16 px-6 md:px-12 w-full bg-gray-50 h-[460px] overflow-auto">
             <div className="mb-3">
                 <span className="text-gray-800 font-medium tracking-wide">CONTACT INFO</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
                 <div>
                     <h2 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
                         We are always happy to assist you
@@ -45,5 +45,5 @@ export function ContactInfo() {
                 </div>
             </div>
         </section>
-    )
+    );
 }

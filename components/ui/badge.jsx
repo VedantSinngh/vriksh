@@ -1,15 +1,17 @@
 // components/ui/badge.jsx
 import React from 'react';
 
-export function Badge({ children, className = "", ...props }) {
-    // Base styles matching the badge in PropertyCard
-    const baseStyles = "inline-flex items-center px-2 py-1 text-sm font-medium rounded-sm bg-[#0196ff]/10 text-[#0196ff] hover:bg-[#0196ff]/20";
+import { cn } from "@/lib/utils";
 
-    // Combine base styles with any additional className passed via props
-    const combinedClassName = `${baseStyles} ${className}`;
-
+export function Badge({ className, children, ...props }) {
     return (
-        <span className={combinedClassName} {...props}>
+        <span
+            className={cn(
+                "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+                className
+            )}
+            {...props}
+        >
             {children}
         </span>
     );
