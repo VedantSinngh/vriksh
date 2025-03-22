@@ -4,35 +4,21 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 export default function Header() {
-    const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    // Handle scroll effect
-    useEffect(() => {
-        const handleScroll = () => {
-            const isScrolled = window.scrollY > 10;
-            if (isScrolled !== scrolled) {
-                setScrolled(isScrolled);
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [scrolled]);
-
     return (
-        <header className={`fixed w-full transition-all duration-300 py-4 px-6 z-50 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
-            <div className="container mx-auto flex justify-between items-center">
+        <header className="fixed w-full transition-all duration-300 py-4 px-6 z-50 bg-white shadow-md">
+            <div className="container mx-auto flex justify-between items-center px-6">
                 {/* Logo */}
                 <Link href="/" className="flex items-center group">
-                <div className="relative w-12 h-12 mr-3 overflow-hidden rounded-full bg-white shadow-sm p-1 transition duration-300 group-hover:shadow-md"> <Image src="/logo.png" alt="Mindsestate Logo" fill className="object-contain p-1" /> </div>
+                    <div className="relative w-12 h-12 mr-3 overflow-hidden rounded-full bg-white shadow-sm p-1 transition duration-300 group-hover:shadow-md">
+                        <Image src="/logo.png" alt="Mindsestate Logo" fill className="object-contain p-1" />
+                    </div>
                     <div className="flex flex-col ml-2">
-                        <span className={`font-bold text-xl transition duration-300 ${scrolled ? "text-gray-800" : "text-white"} group-hover:text-blue-600`}>
+                        <span className="font-bold text-xl transition duration-300 text-gray-800 group-hover:text-blue-600">
                             Mindsestate
                         </span>
-                        <span className={`text-xs font-medium transition duration-300 ${scrolled ? "text-gray-500" : "text-gray-200"}`}>
+                        <span className="text-xs font-medium transition duration-300 text-gray-500">
                             Premium Real Estate
                         </span>
                     </div>
@@ -40,11 +26,11 @@ export default function Header() {
 
                 {/* Main Navigation */}
                 <nav className="hidden md:flex items-center space-x-8">
-                    {["Home", "Properties", "Agents", "Blog"].map((item, index) => (
+                    {["Home", "Properties", "About", "Blog"].map((item, index) => (
                         <Link
                             key={index}
                             href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                            className={`relative font-medium transition-all duration-300 hover:text-blue-600 after:absolute after:w-0 after:h-0.5 after:bg-blue-600 after:bottom-[-4px] after:left-0 after:transition-all after:duration-300 hover:after:w-full ${scrolled ? "text-gray-800" : "text-white"}`}
+                            className="relative font-medium transition-all duration-300 hover:text-blue-600 after:absolute after:w-0 after:h-0.5 after:bg-blue-600 after:bottom-[-4px] after:left-0 after:transition-all after:duration-300 hover:after:w-full text-gray-800"
                         >
                             {item}
                         </Link>
@@ -79,7 +65,7 @@ export default function Header() {
                     <div className="bg-white rounded-xl p-8 w-4/5 max-w-md transform transition-all duration-500">
                         <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Menu</h3>
                         <nav className="flex flex-col space-y-4">
-                            {["Home", "product-listing", "Agents", "Blog"].map((item, index) => (
+                            {["Home", "product-listing", "About", "Blog"].map((item, index) => (
                                 <Link
                                     key={index}
                                     href={item === "Home" ? "/" : `/${item.toLowerCase()}`}

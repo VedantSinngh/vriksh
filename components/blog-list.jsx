@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Clock, User } from "lucide-react"
+import { Clock, User, ArrowUpRight } from "lucide-react"
 
 // Sample blog posts data
 const blogPosts = [
@@ -12,7 +12,8 @@ const blogPosts = [
         author: "Devicethread",
         date: "APRIL 02, 2024, 11:00 GMT",
         slug: "devicethread-announces-strategic-partnership-with-cloudbeds",
-        image: "/placeholder.svg?height=400&width=600",
+        image: "/building1.png",
+        category: "Partnerships"
     },
     {
         id: 2,
@@ -22,7 +23,8 @@ const blogPosts = [
         author: "Sarah Johnson",
         date: "MARCH 15, 2024, 09:30 GMT",
         slug: "5-tips-for-first-time-home-buyers-2024",
-        image: "/placeholder.svg?height=400&width=600",
+        image: "/building1.png",
+        category: "Buyers Guide"
     },
     {
         id: 3,
@@ -32,7 +34,8 @@ const blogPosts = [
         author: "Michael Chen",
         date: "FEBRUARY 28, 2024, 14:45 GMT",
         slug: "rise-of-smart-homes-what-buyers-are-looking-for",
-        image: "/placeholder.svg?height=400&width=600",
+        image: "/building1.png",
+        category: "Technology"
     },
     {
         id: 4,
@@ -42,40 +45,49 @@ const blogPosts = [
         author: "Robert Williams",
         date: "FEBRUARY 10, 2024, 10:15 GMT",
         slug: "commercial-real-estate-trends-2024",
-        image: "/placeholder.svg?height=400&width=600",
+        image: "/building1.png",
+        category: "Market Trends"
     },
 ]
 
 export function BlogList() {
     return (
-        <section className="py-12 px-4 md:px-8 max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto bg-white">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {blogPosts.map((post) => (
                     <Link key={post.id} href={`/blog/${post.slug}`} className="group">
-                        <article className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
-                            <div className="relative h-48 w-full overflow-hidden">
+                        <article className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col border border-gray-200">
+                            <div className="relative h-52 w-full overflow-hidden">
                                 <Image
                                     src={post.image || "/placeholder.svg"}
                                     alt={post.title}
                                     fill
-                                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
+                                <div className="absolute top-3 left-3 z-20">
+                                    <span className="px-3 py-1 bg-gray-900 text-white text-xs font-medium rounded-md">
+                                        {post.category}
+                                    </span>
+                                </div>
                             </div>
-                            <div className="p-5 flex-1 flex flex-col">
-                                <div className="flex items-center text-xs text-gray-500 mb-3">
-                                    <div className="flex items-center mr-4">
-                                        <User className="w-3 h-3 mr-1" />
+                            <div className="p-5 md:p-6 flex-1 flex flex-col">
+                                <div className="flex items-center text-xs text-gray-600 mb-3 space-x-4">
+                                    <div className="flex items-center">
+                                        <User className="w-3 h-3 mr-1 text-gray-600" />
                                         <span>By {post.author}</span>
                                     </div>
                                     <div className="flex items-center">
-                                        <Clock className="w-3 h-3 mr-1" />
+                                        <Clock className="w-3 h-3 mr-1 text-gray-600" />
                                         <span>{post.date}</span>
                                     </div>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2 group-hover:text-accent transition-colors">{post.title}</h3>
-                                <p className="text-gray-600 text-sm mb-4">{post.excerpt}</p>
-                                <div className="mt-auto">
-                                    <span className="text-accent font-medium text-sm group-hover:underline">Read More</span>
+                                <h3 className="text-xl font-semibold mb-3 text-gray-900 group-hover:text-gray-700 transition-colors line-clamp-2">{post.title}</h3>
+                                <p className="text-gray-700 text-sm mb-5 leading-relaxed line-clamp-3">{post.excerpt}</p>
+                                <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+                                    <span className="inline-flex items-center text-gray-900 font-medium text-sm">
+                                        Read More
+                                    </span>
+                                    <ArrowUpRight className="w-4 h-4 text-gray-900 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />
                                 </div>
                             </div>
                         </article>
@@ -85,4 +97,3 @@ export function BlogList() {
         </section>
     )
 }
-

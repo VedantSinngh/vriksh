@@ -124,6 +124,7 @@ export default function HeroSection() {
     const [filteredProperties, setFilteredProperties] = useState(properties);
     const [isClient, setIsClient] = useState(false);
     const [openQuestion, setOpenQuestion] = useState('where');
+    const [currentSlide, setCurrentSlide] = useState(0); // Add this line
 
     useEffect(() => {
         setIsClient(true);
@@ -154,6 +155,14 @@ export default function HeroSection() {
         }
     };
 
+    const handlePrevSlide = () => {
+        setCurrentSlide((prevSlide) => (prevSlide === 0 ? filteredProperties.length - 2 : prevSlide - 1));
+    };
+
+    const handleNextSlide = () => {
+        setCurrentSlide((prevSlide) => (prevSlide === filteredProperties.length - 2 ? 0 : prevSlide + 1));
+    };
+
     return (
         <section className="relative">
             {/* Hero Section */}
@@ -177,12 +186,12 @@ export default function HeroSection() {
                 </div>
             </div>
 
-
             {/* Search Panel Section */}
             <div className="relative -mt-14 px-4 z-10">
-                <div className="w-full max-w-5xl mx-auto bg-white rounded-full shadow-lg overflow-hidden border border-gray-100">
-                    <div className="flex flex-wrap md:flex-nowrap items-center justify-between">
-                        <div className="w-full md:flex-1 px-4 py-3 md:border-r border-gray-100 flex items-center">
+                <div className="w-full max-w-5xl mx-auto bg-white rounded-lg md:rounded-full shadow-lg overflow-hidden border border-gray-100">
+                    <div className="flex flex-col md:flex-row items-center justify-between">
+                        {/* Location Field */}
+                        <div className="w-full md:flex-1 px-4 py-3 border-b md:border-b-0 md:border-r border-gray-100 flex items-center">
                             <div className="text-blue-500 mr-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -199,7 +208,9 @@ export default function HeroSection() {
                                 </select>
                             </div>
                         </div>
-                        <div className="w-full md:flex-1 px-4 py-3 md:border-r border-gray-100 flex items-center">
+
+                        {/* Property Type Field */}
+                        <div className="w-full md:flex-1 px-4 py-3 border-b md:border-b-0 md:border-r border-gray-100 flex items-center">
                             <div className="text-blue-500 mr-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -215,7 +226,9 @@ export default function HeroSection() {
                                 </select>
                             </div>
                         </div>
-                        <div className="w-full md:flex-1 px-4 py-3 md:border-r border-gray-100 flex items-center">
+
+                        {/* Price Range Field */}
+                        <div className="w-full md:flex-1 px-4 py-3 border-b md:border-b-0 md:border-r border-gray-100 flex items-center">
                             <div className="text-blue-500 mr-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -231,8 +244,10 @@ export default function HeroSection() {
                                 </select>
                             </div>
                         </div>
-                        <div className="py-3 pr-4 pl-2">
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-12 h-12 flex items-center justify-center transition-colors duration-300 shadow-md">
+
+                        {/* Search Button */}
+                        <div className="w-full md:w-auto py-3 px-4 flex justify-center">
+                            <button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-full md:w-12 h-12 flex items-center justify-center transition-colors duration-300 shadow-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
@@ -245,52 +260,146 @@ export default function HeroSection() {
             <FeaturedProperties />
 
             {/* Featured Properties Section */}
-            <section className="py-12 px-4" style={{ backgroundColor: 'rgb(246, 249, 255)' }}>
-                <div className="container mx-auto py-8 px-4">
-                    <h1 className="text-2xl font-bold mb-6">Our Featured Exclusives</h1>
+            <section className="py-16 px-4 bg-gradient-to-b from-blue-50 to-white">
+                <div className="container mx-auto py-8 px-4 sm:px-6">
+                    <div className="flex justify-between items-center mb-8">
+                        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                            Our Featured <span className="text-blue-600">Exclusives</span>
+                        </h1>
 
-                    {isClient && (
-                        <>
-                            <div className="flex items-center space-x-6 mb-6">
-                                <span
-                                    className={`text-sm cursor-pointer ${activeTab === 'all' ? 'text-blue-600 font-medium' : 'text-gray-500'}`}
-                                    onClick={() => setActiveTab('all')}
-                                >
+                        <div className="hidden md:block">
+                            <button
+                                className="text-sm hover:bg-blue-50 px-3 py-1.5 rounded-full transition-colors"
+                                onClick={() => setActiveTab('all')}
+                            >
+                                <span className={`${activeTab === 'all' ? 'text-blue-600 font-medium border-b-2 border-blue-600 pb-1' : 'text-gray-600'}`}>
                                     All
                                 </span>
-                                <span
-                                    className={`text-sm cursor-pointer ${activeTab === 'rent' ? 'text-blue-600 font-medium' : 'text-gray-500'}`}
-                                    onClick={() => setActiveTab('rent')}
-                                >
+                            </button>
+                            <button
+                                className="text-sm hover:bg-blue-50 px-3 py-1.5 rounded-full transition-colors"
+                                onClick={() => setActiveTab('rent')}
+                            >
+                                <span className={`${activeTab === 'rent' ? 'text-blue-600 font-medium border-b-2 border-blue-600 pb-1' : 'text-gray-600'}`}>
                                     For Rent
                                 </span>
-                                <span
-                                    className={`text-sm cursor-pointer ${activeTab === 'sale' ? 'text-blue-600 font-medium' : 'text-gray-500'}`}
-                                    onClick={() => setActiveTab('sale')}
-                                >
+                            </button>
+                            <button
+                                className="text-sm hover:bg-blue-50 px-3 py-1.5 rounded-full transition-colors"
+                                onClick={() => setActiveTab('sale')}
+                            >
+                                <span className={`${activeTab === 'sale' ? 'text-blue-600 font-medium border-b-2 border-blue-600 pb-1' : 'text-gray-600'}`}>
                                     For Sale
                                 </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Mobile tabs */}
+                    <div className="flex md:hidden items-center space-x-6 mb-6 overflow-x-auto pb-2">
+                        <button
+                            className={`text-sm whitespace-nowrap px-3 py-1.5 rounded-full ${activeTab === 'all' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}
+                            onClick={() => setActiveTab('all')}
+                        >
+                            All
+                        </button>
+                        <button
+                            className={`text-sm whitespace-nowrap px-3 py-1.5 rounded-full ${activeTab === 'rent' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}
+                            onClick={() => setActiveTab('rent')}
+                        >
+                            For Rent
+                        </button>
+                        <button
+                            className={`text-sm whitespace-nowrap px-3 py-1.5 rounded-full ${activeTab === 'sale' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}
+                            onClick={() => setActiveTab('sale')}
+                        >
+                            For Sale
+                        </button>
+                    </div>
+
+                    {isClient && (
+                        <div className="relative">
+                            {/* Navigation buttons - desktop */}
+                            <button
+                                className="hidden md:flex absolute -left-4 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 hover:bg-blue-50 transition-colors items-center justify-center"
+                                aria-label="Previous properties"
+                                onClick={handlePrevSlide}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </button>
+
+                            {/* Desktop view: Grid layout */}
+                            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {filteredProperties.map(property => (
+                                    <PropertyCard key={property.id} property={property} />
+                                ))}
                             </div>
 
-                            <div className="relative">
-                                <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow z-10">
-                                    &lt;
-                                </button>
+                            {/* Mobile view: Carousel with first card visible */}
+                            <div className="md:hidden">
+                                {/* First card always visible */}
+                                {filteredProperties.length > 0 && (
+                                    <div className="mb-6">
+                                        <PropertyCard property={filteredProperties[0]} />
+                                    </div>
+                                )}
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto">
-                                    {filteredProperties.map(property => (
-                                        <PropertyCard key={property.id} property={property} />
-                                    ))}
+                                {/* Carousel for remaining cards */}
+                                <div className="relative">
+                                    <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 pb-4">
+                                        {filteredProperties.slice(1).map(property => (
+                                            <div key={property.id} className="flex-shrink-0 w-full snap-center">
+                                                <PropertyCard property={property} />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Mobile carousel indicators */}
+                                    <div className="flex justify-center mt-4 space-x-2">
+                                        {filteredProperties.slice(1).map((_, index) => (
+                                            <button
+                                                key={index}
+                                                className={`w-2 h-2 rounded-full ${currentSlide === index ? 'bg-blue-600' : 'bg-gray-300'}`}
+                                                onClick={() => setCurrentSlide(index)}
+                                                aria-label={`Go to slide ${index + 1}`}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
-
-                                <button className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow z-10">
-                                    &gt;
-                                </button>
                             </div>
-                        </>
+
+                            {/* Navigation buttons - desktop */}
+                            <button
+                                className="hidden md:flex absolute -right-4 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 hover:bg-blue-50 transition-colors items-center justify-center"
+                                aria-label="Next properties"
+                                onClick={handleNextSlide}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </button>
+
+                            {/* Mobile swipe indicators */}
+                            <div className="flex md:hidden justify-center mt-4">
+                                <div className="text-xs text-gray-500">Swipe for more</div>
+                            </div>
+                        </div>
                     )}
                 </div>
             </section>
+
+            {/* Add this CSS to your global styles or component */}
+            <style jsx global>{`
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+`}</style>
 
             {/* Testimonial and Following Sections */}
             <section className="py-16 px-4" style={{ backgroundColor: 'rgb(246, 249, 255)' }}>

@@ -1,17 +1,16 @@
-import Image from "next/image"
-import { Check, Download, MapPin } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import Image from "next/image";
+import { Check, Download, MapPin } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
-export function PropertyDetailCard() {
+export function PropertyDetailCard({ property }) {
     return (
         <div className="flex flex-col text-black">
-            {/* Full width image section */}
             <div className="w-full mb-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="md:col-span-2">
                         <div className="relative w-full h-80 rounded-lg overflow-hidden">
-                            <Image src="/contact.png" alt="Bedroom interior" fill className="object-cover" />
+                            <Image src={property.image} alt={property.title} fill className="object-cover" />
                         </div>
                     </div>
                     <div className="space-y-4">
@@ -28,23 +27,26 @@ export function PropertyDetailCard() {
                 </div>
             </div>
 
-            {/* Main content grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="md:col-span-2 space-y-6">
                     <div>
-                        <Badge className="bg-[#0196ff]/10 text-[#0196ff] hover:bg-[#0196ff]/20 rounded-sm">APARTMENT</Badge>
+                        <Badge className="bg-[#0196ff]/10 text-[#0196ff] hover:bg-[#0196ff]/20 rounded-sm">
+                            {property.type.split(' ')[1].toUpperCase()}
+                        </Badge>
                         <div className="flex flex-wrap justify-between items-start mt-2">
                             <div>
-                                <h1 className="text-2xl font-bold text-black">OEUVRE 3</h1>
+                                <h1 className="text-2xl font-bold text-black">{property.title}</h1>
                                 <div className="flex items-center text-black mt-1">
                                     <MapPin className="h-4 w-4 mr-1" />
-                                    <span>2015 Tree Lane Owensdale, MD 85210</span>
+                                    <span>{property.location}</span>
                                 </div>
                                 <div className="text-sm text-black mt-1">(100 People Recommended)</div>
                             </div>
                             <div className="text-right">
-                                <div className="text-xl font-bold text-[#0196ff]">$1205500</div>
-                                <div className="text-sm text-black">( Price Only )</div>
+                                <div className="text-xl font-bold text-[#0196ff]">{property.price}</div>
+                                <div className="text-sm text-black">
+                                    {property.priceType ? `(${property.priceType})` : '(Price Only)'}
+                                </div>
                                 <Button size="sm" className="mt-2 gradient-bg">
                                     <span className="text-xs">Contact</span>
                                 </Button>
@@ -80,29 +82,27 @@ export function PropertyDetailCard() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-y py-4">
                         <div>
                             <div className="text-sm text-black">Rooms:</div>
-                            <div className="font-medium text-black">7</div>
+                            <div className="font-medium text-black">{property.beds ? property.beds + 2 : 'N/A'}</div>
                         </div>
                         <div>
                             <div className="text-sm text-black">Beds:</div>
-                            <div className="font-medium text-black">5</div>
+                            <div className="font-medium text-black">{property.beds || 'N/A'}</div>
                         </div>
                         <div>
                             <div className="text-sm text-black">Area:</div>
-                            <div className="font-medium text-black">
-                                1200 Sqft<sup>2</sup>
-                            </div>
+                            <div className="font-medium text-black">{property.sqft}</div>
                         </div>
                         <div>
                             <div className="text-sm text-black">Swimming:</div>
-                            <div className="font-medium text-black">Yes ( 1 Large )</div>
+                            <div className="font-medium text-black">Yes (1 Large)</div>
                         </div>
                         <div>
                             <div className="text-sm text-black">Baths:</div>
-                            <div className="font-medium text-black">1</div>
+                            <div className="font-medium text-black">{property.baths || 'N/A'}</div>
                         </div>
                         <div>
                             <div className="text-sm text-black">Car Garage:</div>
-                            <div className="font-medium text-black">Yes ( 5 Capacity )</div>
+                            <div className="font-medium text-black">Yes (5 Capacity)</div>
                         </div>
                     </div>
 
@@ -112,19 +112,12 @@ export function PropertyDetailCard() {
                             Maecenas egestas quam et volutpat bibendum metus vulputate platea eleifend sed integer dictum ultricies
                             consectetur nunc vivamus a. Eu nulla justo magna lacinia purus sodales scelerisque. Sociosqu pede
                             facilisi. Curae; lacinia id. Sociis pretium gravida auctor mus amet accumsan adipiscing id dignissim,
-                            potenti. Curae; massa ridiculus lobortis consectetur condimentum mollis vulputate hymenaeos tellus egestas
-                            auctor dictumst imperdiet cursus quique ut porta molestie dui duis blandit molestie etiam enim erat sociis
-                            lacinia litora phasellus sit. Ipsum.Lacinia class enim pharetra interdum potenti tellus parturient.
-                            Potenti scelerisque erat facilisi mauris tortor, mattis euismod augue nascetur rutrum augue ipsum tortor
-                            dictum porta primis.
+                            potenti.
                         </p>
                         <p className="text-black text-sm leading-relaxed">
                             Praesent lectus facilisi tempor ridiculus arcu pharetra non tellus. Torquent nisl tempor. Magnis mollis
                             lobortis nam, montes ut consequat sed amet nullam, malesuada nascetur ornare sociosqu magna cum gravida
-                            quam tincidunt dapibus tellus felis nibh inceptos tellus convallis facilisis torquent. Laoreet pulvinar
-                            id. Fringilla lacus tellus lectus erat hac conubia eget quique nisl aliquam nibh molestie nisl hymenaeos
-                            id phasellus metus duis inceptos arcu hendrerit ligula blandit lectus nisl fermentum sociosqu pretium eros
-                            libero.
+                            quam tincidunt dapibus tellus felis nibh inceptos tellus convallis facilisis torquent.
                         </p>
                     </div>
 
@@ -147,108 +140,217 @@ export function PropertyDetailCard() {
                     </div>
                 </div>
 
+                {/* Side bar (Right) */}
                 <div className="md:col-span-1 mt-8 md:mt-0">
-                    <div className="space-y-6">
-                        <div className="border rounded-lg p-6 space-y-6">
-                            <div>
-                                <h3 className="text-lg font-medium text-black">Listed By</h3>
-                                <div className="flex items-center gap-4 mt-4">
-                                    <div className="relative w-16 h-16 rounded-full overflow-hidden">
-                                        <Image src="/placeholder.svg?height=100&width=100" alt="Agent" fill className="object-cover" />
+                    {/* Side bar (Right) */}
+                    {/* Side bar (Right) */}
+                    <div className="md:col-span-1 mt-8 md:mt-0">
+                        <div className="space-y-6">
+                            <div className="border rounded-lg p-6 space-y-6">
+                                <div>
+                                    <h3 className="text-lg font-medium text-black">Listed By</h3>
+                                    <div className="flex items-center gap-4 mt-4">
+                                        <div className="relative w-16 h-16 rounded-full overflow-hidden">
+                                            <Image src="/placeholder.svg" alt="Agent" fill className="object-cover" />
+                                        </div>
+                                        <div>
+                                            <div className="font-medium text-black">Luann McLawhorn</div>
+                                            <div className="text-sm text-black">+1(811) 634 5121 info@website.com</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div className="font-medium text-black">Luann McLawhorn</div>
-                                        <div className="text-sm text-black">+1(811) 634 5121 info@website.com</div>
+                                </div>
+
+                                {/* Contact form */}
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="name">Your Name</label>
+                                        <input
+                                            id="name"
+                                            type="text"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
                                     </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="phone">Phone Number</label>
+                                        <input
+                                            id="phone"
+                                            type="tel"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="email">Your Email</label>
+                                        <input
+                                            id="email"
+                                            type="email"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="message">Message</label>
+                                        <textarea
+                                            id="message"
+                                            rows="4"
+                                            placeholder="Type your message here..."
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        ></textarea>
+                                    </div>
+
+                                    <Button className="w-full gradient-bg">Send Message</Button>
                                 </div>
                             </div>
 
-                            <div className="space-y-4">
-                                <div className="space-y-2">
-                                    <label className="text-sm text-black">Your Name</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm text-black">Phone Number</label>
-                                    <input
-                                        type="tel"
-                                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm text-black">Your Email</label>
-                                    <input
-                                        type="email"
-                                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
-                                    />
-                                </div>
-                                <Button className="w-full gradient-bg">Send Message</Button>
-                            </div>
-                        </div>
+                            {/* Search Property Box */}
+                            <div className="border rounded-lg p-6 space-y-6">
+                                <h3 className="text-lg font-medium text-black">Search Property</h3>
+                                <div className="space-y-4">
 
-                        <div className="border rounded-lg p-6 space-y-6">
-                            <h3 className="text-lg font-medium text-black">Search Property</h3>
-
-                            <div className="space-y-4">
-                                <div className="space-y-2">
-                                    <input
-                                        type="text"
-                                        placeholder="Enter Keyword..."
-                                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-sm text-black">Property Types</span>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="text-black"
-                                        >
-                                            <path d="m6 9 6 6 6-6" />
-                                        </svg>
+                                    {/* Keyword Search */}
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="keyword">Enter Keyword</label>
+                                        <input
+                                            id="keyword"
+                                            type="text"
+                                            placeholder="Enter keyword..."
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
                                     </div>
-                                    <div className="w-full px-3 py-2 border rounded-md text-black">Select</div>
-                                </div>
 
-                                <div className="space-y-2">
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-sm text-black">Property Status</span>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="text-black"
-                                        >
-                                            <path d="m6 9 6 6 6-6" />
-                                        </svg>
+                                    {/* Existing Filters: Location, Property Types, Property Status */}
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="location">Location</label>
+                                        <input
+                                            id="location"
+                                            type="text"
+                                            placeholder="Enter location"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
                                     </div>
-                                    <div className="w-full px-3 py-2 border rounded-md text-black">Select</div>
-                                </div>
 
-                                <Button className="w-full gradient-bg">Search</Button>
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-black">Property Types</span>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="text-black"
+                                            >
+                                                <path d="m6 9 6 6 6-6" />
+                                            </svg>
+                                        </div>
+                                        <div className="w-full px-3 py-2 border rounded-md text-black">Select</div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-black">Property Status</span>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="text-black"
+                                            >
+                                                <path d="m6 9 6 6 6-6" />
+                                            </svg>
+                                        </div>
+                                        <div className="w-full px-3 py-2 border rounded-md text-black">Select</div>
+                                    </div>
+
+                                    {/* New Filters: Price, Bedrooms, Bathrooms, Garage */}
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="price">Price</label>
+                                        <input
+                                            id="price"
+                                            type="text"
+                                            placeholder="Enter price range"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="bedrooms">Bedrooms</label>
+                                        <input
+                                            id="bedrooms"
+                                            type="number"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="bathrooms">Bathrooms</label>
+                                        <input
+                                            id="bathrooms"
+                                            type="number"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="garage">Garage</label>
+                                        <input
+                                            id="garage"
+                                            type="number"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
+                                    </div>
+
+                                    {/* Min & Max Area (Side by Side) */}
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-black" htmlFor="min-area">Min Area (sqft)</label>
+                                            <input
+                                                id="min-area"
+                                                type="number"
+                                                placeholder="Min Area"
+                                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-black" htmlFor="max-area">Max Area (sqft)</label>
+                                            <input
+                                                id="max-area"
+                                                type="number"
+                                                placeholder="Max Area"
+                                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Advanced Options */}
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-black" htmlFor="advanced">Advanced Options</label>
+                                        <input
+                                            id="advanced"
+                                            type="checkbox"
+                                            className="w-4 h-4 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#0196ff]"
+                                        />
+                                    </div>
+
+                                    <Button className="w-full gradient-bg">Search</Button>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
-    )
+    );
 }

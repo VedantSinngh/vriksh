@@ -20,7 +20,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <main>{children}</main>
+        <main className="pt-16"> {/* Adjust pt-16 based on Navbar height */}
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
