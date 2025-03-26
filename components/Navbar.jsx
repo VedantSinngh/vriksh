@@ -1,7 +1,7 @@
 'use client';
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -65,7 +65,7 @@ export default function Header() {
                     <div className="bg-white rounded-xl p-8 w-4/5 max-w-md transform transition-all duration-500">
                         <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Menu</h3>
                         <nav className="flex flex-col space-y-4">
-                            {["Home", "product-listing", "About", "Blog"].map((item, index) => (
+                            {["Home", "Properties", "About", "Blog"].map((item, index) => (
                                 <Link
                                     key={index}
                                     href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
