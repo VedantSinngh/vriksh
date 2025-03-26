@@ -1,3 +1,14 @@
+interface Property {
+  id: number;
+  buildYear?: string;
+  type: string;
+  sqft?: string;
+}
+
+interface PropertyInfoProps {
+  property: Property;
+}
+
 export default function PropertyInfo({ property }) {
     return (
         <div className="max-w-4xl p-6 text-[#1d1d1f] text-left pl-6">
