@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Share2, MapPin, Bed, Bath, Square, ChevronDown, Grid, List } from "lucide-react";
+import { MapPin, Bed, Bath, Square, Camera, Video } from "lucide-react";
+import { useMemo } from "react";
 
 export const properties = [
     {
@@ -18,6 +19,7 @@ export const properties = [
         baths: null,
         addedDate: "June 12, 2022",
         buildYear: null,
+        agent: "/available.png", // Agent Status or Image
     },
     {
         id: 2,
@@ -34,6 +36,7 @@ export const properties = [
         baths: 4,
         addedDate: "June 11, 2022",
         buildYear: "2018",
+        agent: "/available.png",
     },
     {
         id: 3,
@@ -50,6 +53,7 @@ export const properties = [
         baths: null,
         addedDate: "June 10, 2022",
         buildYear: "2019",
+        agent: "/available.png",
     },
     {
         id: 4,
@@ -66,6 +70,7 @@ export const properties = [
         baths: 3,
         addedDate: "June 15, 2022",
         buildYear: "2018",
+        agent: "/available.png",
     },
     {
         id: 5,
@@ -82,6 +87,7 @@ export const properties = [
         baths: 3.5,
         addedDate: "June 14, 2022",
         buildYear: "2019",
+        agent: "/available.png",
     },
     {
         id: 6,
@@ -92,173 +98,145 @@ export const properties = [
         type: "For Sale",
         featured: true,
         hot: false,
+        Trendy: true,
         image: "/product.png",
         sqft: "4530 sq ft",
         beds: 3,
         baths: 4,
         addedDate: "June 13, 2022",
         buildYear: "2018",
-    },
+        agent: "/available.png",
+    }
 ];
 
-function PropertyCard({
-    image,
-    title,
-    location,
-    beds,
-    baths,
-    area,
-    price,
-    priceType,
-    buildYear,
-    tags,
-    date,
-}) {
-    const slug = title.toLowerCase().replace(/\s+/g, '-');
+
+function Tags({ tags }) {
+    const tagImages = {
+        "For Rent": "/rent.png",
+        "For Sale": "/sale.png",
+        "Featured": "/featured.png",
+        "Hot": "/hot.png",
+        "Trendy": "/trendy.png"
+    };
+
+    return (
+        <div className="flex gap-2 mb-2 flex-wrap">
+            {tags.map((tag, index) => (
+                tagImages[tag] ? (
+                    <Image
+                        key={index}
+                        src={tagImages[tag]}
+                        alt={tag}
+                        width={tag === "Hot" ? 35 : 60} // Smaller width for Hot
+                        height={tag === "Hot" ? 10 : 20} // Smaller height for Hot
+                        className="object-contain"
+                    />
+                ) : null
+            ))}
+        </div>
+    );
+}
+
+
+
+
+function PropertyCard({ property }) {
+    const { image, title, location, beds, baths, sqft, price, priceType, buildYear, addedDate, type, featured, hot } = property;
+
+    const slug = useMemo(() => title.toLowerCase().replace(/\s+/g, "-"), [title]);
+    const tags = useMemo(() => [type, ...(featured ? ["Featured"] : []), ...(hot ? ["Hot"] : [])], [type, featured, hot]);
 
     return (
         <Link href={`/properties/${slug}`} className="block w-full">
-            <div className="flex flex-col md:flex-row border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow h-full">
+            <article className="flex flex-col md:flex-row border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow h-full">
+                {/* Image Section */}
                 <div className="relative md:w-72 h-60">
                     <Image src={image || "/placeholder.svg"} alt={title} fill className="object-cover" />
-                    <div className="absolute bottom-3 left-3 flex gap-1">
-                        <button className="w-8 h-8 bg-black bg-opacity-60 rounded-full flex items-center justify-center">
-                            <Heart className="h-4 w-4 text-white" />
-                        </button>
-                        <button className="w-8 h-8 bg-black bg-opacity-60 rounded-full flex items-center justify-center">
-                            <Share2 className="h-4 w-4 text-white" />
-                        </button>
+                    {/* Camera & Video Icons with Count (Right-Most) */}
+                    <div className="absolute bottom-3 right-3 flex gap-2 bg-black bg-opacity-60 px-2 py-1 rounded-lg">
+                        <div className="flex items-center text-white text-sm">
+                            <Camera className="h-4 w-4 mr-1" /> <span>12</span> {/* Replace with actual count */}
+                        </div>
+                        <div className="flex items-center text-white text-sm">
+                            <Video className="h-4 w-4 mr-1" /> <span>5</span> {/* Replace with actual count */}
+                        </div>
                     </div>
                 </div>
 
-                <div className="flex-1 p-4">
+                {/* Details Section */}
+                <div className="flex-1 p-4"> {/* Kept padding optimal */}
                     <div className="flex justify-between items-start mb-3">
                         <div>
-                            <div className="flex gap-2 mb-2 flex-wrap">
-                                {tags.map((tag, index) => (
-                                    <span
-                                        key={index}
-                                        className={`text-xs px-2 py-1 rounded-full ${tag === "For Rent"
-                                                ? "bg-[#0196ff] text-white"
-                                                : tag === "For Sale"
-                                                    ? "bg-[#0196ff] text-white"
-                                                    : tag === "Featured"
-                                                        ? "bg-[#5a01ff] text-white"
-                                                        : tag === "Hot"
-                                                            ? "bg-[#dd3333] text-white"
-                                                            : "bg-gray-200 text-gray-700"
-                                            }`}
-                                    >
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                            <h2 className="text-lg font-semibold text-[#1d1d1f] mb-1">{title}</h2>
-                            <div className="flex items-center text-sm text-[#666666] mb-3">
-                                <MapPin className="h-4 w-4 text-[#0196ff] mr-1 flex-shrink-0" />
+                            <Tags tags={tags} />
+                            <h2 className="text-[17px] font-semibold text-black font-['DM Sans']">{title}</h2>
+                            <div className="flex items-center text-[14px] text-black">
+                                <MapPin className="h-4 w-4 text-blue-500 mr-1 flex-shrink-0" />
                                 <span className="line-clamp-1">{location}</span>
                             </div>
                         </div>
                         <div className="text-right ml-4 flex-shrink-0">
-                            {buildYear && <div className="text-xs text-[#666666] mb-1">Build {buildYear}</div>}
-                            <div className="font-bold text-lg text-[#1d1d1f]">{price}</div>
-                            {priceType && <div className="text-xs text-[#666666]">{priceType}</div>}
+                            {buildYear && <div className="text-xs text-black">Built {buildYear}</div>}
+                            <div className="font-bold text-lg text-black">{price}</div>
+                            {priceType && <div className="text-xs text-black">{priceType}</div>}
                         </div>
                     </div>
-                    <div className="flex items-center gap-4 mb-3 flex-wrap">
+                    <div className="flex items-center gap-4 flex-wrap">
                         {beds && (
-                            <div className="flex items-center text-sm text-[#666666]">
-                                <Bed className="h-4 w-4 text-[#0196ff] mr-1" />
+                            <div className="flex items-center text-sm text-black">
+                                <Bed className="h-4 w-4 text-blue-500 mr-1" />
                                 <span>{beds}</span>
                             </div>
                         )}
                         {baths && (
-                            <div className="flex items-center text-sm text-[#666666]">
-                                <Bath className="h-4 w-4 text-[#0196ff] mr-1" />
+                            <div className="flex items-center text-sm text-black">
+                                <Bath className="h-4 w-4 text-blue-500 mr-1" />
                                 <span>{baths}</span>
                             </div>
                         )}
-                        <div className="flex items-center text-sm text-[#666666]">
-                            <Square className="h-4 w-4 text-[#0196ff] mr-1" />
-                            <span>{area}</span>
+                        <div className="flex items-center text-sm text-black">
+                            <Square className="h-4 w-4 text-blue-500 mr-1" />
+                            <span>{sqft}</span>
                         </div>
                     </div>
-                    <div className="text-xs text-[#666666] mb-3">Added: {date}</div>
-                    <div className="flex gap-2 mt-auto">
-                        <button className="px-4 py-2 bg-[#00aa5b] text-white rounded text-sm font-medium">
+                    <div className="text-xs text-black">Added: {addedDate}</div>
+
+                    {/* Images above buttons */}
+                    <div className="flex justify-end gap-2 mt-2">
+                        <img src="/share.png" alt="icon1" className="w-8 h-8" />
+                        <img src="/share2.png" alt="icon2" className="w-8 h-8" />
+                    </div>
+
+                    <div className="flex gap-2 justify-end mt-2">
+                        <button className="px-4 py-2 bg-green-500 text-white rounded-lg text-[18px] font-semibold font-['DM Sans']">
                             WhatsApp Us
                         </button>
-                        <button className="px-4 py-2 bg-[#0196ff] text-white rounded text-sm font-medium">
+                        <button className="px-4 py-2 bg-blue-500 text-white rounded-lg text-[18px] font-semibold font-['DM Sans']">
                             Get a Call
                         </button>
                     </div>
                 </div>
-            </div>
+
+
+            </article>
         </Link>
     );
 }
 
 export default function PropertiesListFullwidth() {
     return (
-        <div className="container mx-auto px-4 sm:px-6 py-6">
+        <div className="container mx-auto px-4 sm:px-6 py-1">
             <div className="flex items-center text-sm mb-2">
-                <Link href="/" className="text-[#333333] hover:underline">
-                    Home
-                </Link>
-                <span className="mx-2 text-[#808080]">›</span>
-                <span className="text-[#0196ff]">Properties List Fullwidth</span>
+                <Link href="/" className="text-gray-700 hover:underline">Home</Link>
+                <span className="mx-2 text-gray-500">›</span>
+                <span className="text-blue-500">Properties List</span>
             </div>
-            <h1 className="text-2xl font-bold text-[#1d1d1f] mb-6">Properties List Fullwidth</h1>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                <div className="text-sm text-[#666666]">1 to 6 out of 10 properties</div>
-                <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex items-center gap-2">
-                        <span className="text-sm text-[#666666]">Sort By:</span>
-                        <button className="flex items-center text-sm text-[#333333] font-medium">
-                            Date New to Old <ChevronDown className="ml-1 h-4 w-4" />
-                        </button>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <button className="bg-[#0196ff] p-1.5 rounded">
-                            <Grid className="h-4 w-4 text-white" />
-                        </button>
-                        <button className="p-1.5 rounded">
-                            <List className="h-4 w-4 text-[#666666]" />
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <h1 className="text-[30px] font-semibold text-gray-900 mb-3 font-['DM_Sans']">
+                Properties List Fullwidth
+            </h1>
             <div className="grid grid-cols-1 gap-6">
                 {properties.map((property) => (
-                    <PropertyCard
-                        key={property.id}
-                        image={property.image}
-                        title={property.title}
-                        location={property.location}
-                        beds={property.beds}
-                        baths={property.baths}
-                        area={property.sqft}
-                        price={property.price}
-                        priceType={property.priceType}
-                        buildYear={property.buildYear}
-                        tags={[
-                            property.type,
-                            ...(property.featured ? ["Featured"] : []),
-                            ...(property.hot ? ["Hot"] : []),
-                        ]}
-                        date={property.addedDate}
-                    />
+                    <PropertyCard key={property.id} property={property} />
                 ))}
-            </div>
-            <div className="flex justify-center mt-8">
-                <div className="flex gap-2">
-                    <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#0196ff] text-white text-sm">
-                        1
-                    </button>
-                    <button className="w-8 h-8 flex items-center justify-center rounded-full text-[#666666] text-sm hover:bg-gray-100">
-                        2
-                    </button>
-                </div>
             </div>
         </div>
     );

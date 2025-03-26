@@ -53,9 +53,12 @@ const FAQSection = () => {
 
     return (
         <div className="w-full py-4 px-6 text-black">
-            <h2 className="text-xl font-bold mb-3 px-2">Wondering How This Works</h2>
+            <div className="inline-block">
+                <h2 className="font-inter font-bold text-[35px] mb-3 px-2">Wondering How This Works</h2>
+                <div className="border-t border-gray-200 w-full"></div>
+            </div>
 
-            <div className="border-t border-gray-200 w-full">
+            <div className="w-full">
                 {faqs.map((faq, index) => (
                     <FAQItem
                         key={index}

@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
 
 /**
  * FeaturedProperties component displays a section with company description and property images
@@ -9,24 +8,25 @@ import { ArrowRight } from "lucide-react"
  */
 export function FeaturedProperties() {
     return (
-        <section className="pt-12 pb-24 px-4 -mt-6 bg-transparent"
-        // style={{ backgroundColor: 'rgb(246, 249, 255)' }}
-        >
+        <section className="mt-10 pt-12 pb-24 px-4 bg-transparent"> {/* 40px margin from top */}
             <div className="container mx-auto">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                    <div className="md:w-2/5 w-full">
-                        <h2 className="text-3xl font-bold mb-6 text-gray-900 leading-tight">
+                    
+                    {/* Left Section - Text Content */}
+                    <div className="md:w-2/5 w-full flex flex-col justify-center h-full px-10">
+                        <h2 className="text-[48px] font-semibold mb-6 text-gray-900 leading-tight font-[Source Sans Pro] w-[530px]">
                             Your Trusted Gateway to Ahmedabad's Finest Homes
                         </h2>
-                        <p className="text-gray-700 mb-8 leading-relaxed text-base">
+                        <p className="text-[20px] font-normal text-gray-700 mb-8 leading-relaxed font-[Source Sans Pro] w-[530px]">
                             Mindsestate is a dedicated real estate consultancy focused on bringing Ahmedabad's most promising under-construction residential projects to discerning homebuyers. We simplify the home-buying process with expert market insights, personalized assistance, and a commitment to transparency.
                         </p>
-                        <button className="border-2 border-blue-600 text-blue-600 font-medium rounded-full px-8 py-3 inline-flex items-center text-sm hover:bg-blue-50 transition-all duration-300 shadow-sm">
+                        <button className="border-2 border-blue-600 text-blue-600 font-medium rounded-full px-5 py-3 inline-flex items-center text-sm hover:bg-blue-50 transition-all duration-300 shadow-sm">
                             Read More <span className="ml-2">→</span>
                         </button>
                     </div>
 
-                    <div className="md:w-1/2">
+                    {/* Right Section - Image Grid */}
+                    <div className="md:w-1/2 flex items-center justify-center px-10">
                         <div className="relative w-full h-[600px]">
                             {/* Top left image - Large */}
                             <div className="absolute top-0 left-0 w-[49%] h-[58%] overflow-hidden rounded-md">
